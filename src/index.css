@@ -6,9 +6,14 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  background: #0D0D12;
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  background: #0D0D12;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,17 +38,6 @@ body {
 }
 
 /* Animações */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -53,10 +47,11 @@ body {
   }
 }
 
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out;
-}
-
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
+}
+
+/* Smoothing */
+button {
+  transition: all 0.2s ease;
 }
