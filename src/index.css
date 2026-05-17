@@ -6,20 +6,14 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
-  width: 100%;
-  height: 100%;
-  background: #0D0D12;
-}
-
 body {
   font-family: 'Inter', sans-serif;
+  background: #0D0D12;
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar Customizado */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -37,21 +31,40 @@ body {
   background: #3A3A45;
 }
 
-/* Animações */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.25s ease-out forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.18s ease-out forwards;
 }
 
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Smoothing */
-button {
-  transition: all 0.2s ease;
+.animate-ping {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
