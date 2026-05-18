@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { 
-  Heart, X, Star, RotateCcw, Settings, Home, Search, 
+  Heart, X, Star, RotateCcw, Home, Search, 
   MessageCircle, User, Diamond, Rocket, Bell, ChevronRight,
-  ArrowLeft, Send, Wallet, ShieldCheck, Zap, MapPin, Share2,
-  PlusCircle, Lock, Eye, EyeOff, Camera, Check
+  ArrowLeft, Send, Wallet, Zap, Camera, Check, PlusCircle
 } from 'lucide-react';
 
 const HelicaApp = () => {
-  // ════════════════════ ESTADOS GLOBAIS ════════════════════
   const [view, setView] = useState('discovery');
   const [coins, setCoins] = useState(1250);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -21,7 +19,6 @@ const HelicaApp = () => {
   ]);
   const [chatInput, setChatInput] = useState('');
 
-  // ════════════════════ DADOS MOCKADOS ════════════════════
   const discoveryCards = [
     {
       id: 1,
@@ -52,27 +49,20 @@ const HelicaApp = () => {
     }
   ];
 
-  const feedItems = [
-    { id: 1, title: 'Ensaio Premium Saurimo', price: '15.000 Kz', location: 'Bairro Candembe', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=500' },
-    { id: 2, title: 'Sessão de Fotos Luanda', price: '12.000 Kz', location: 'Centro', image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=500' },
-    { id: 3, title: 'Aula de Fotografia', price: '8.000 Kz', location: 'Online', image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&q=80&w=500' }
-  ];
-
   const currentCard = discoveryCards[currentCardIndex];
 
-  // ════════════════════ HANDLERS ════════════════════
   const handleCardAction = (action) => {
     setCurrentCardIndex((prev) => (prev + 1) % discoveryCards.length);
   };
 
   const handleBoostActivate = () => {
     if (coins < 50) {
-      alert('Saldo insuficiente! Por favor, recarrega a tua carteira.');
+      alert('Saldo insuficiente!');
       return;
     }
     setCoins(prev => prev - 50);
     setIsModalOpen(false);
-    alert('Boost Ativado! O teu perfil está agora no topo da lista por 30 minutos.');
+    alert('Boost Ativado! O teu perfil está agora em destaque por 30 minutos.');
   };
 
   const simulateCameraCapture = () => {
@@ -97,7 +87,7 @@ const HelicaApp = () => {
     }
   };
 
-  // ════════════════════ HEADER GLOBAL ════════════════════
+  // HEADER
   const Header = () => (
     <header className="px-5 py-4 flex items-center justify-between border-b border-[#1A1A22] sticky top-0 bg-[#0D0D12] z-50">
       <div className="flex items-center gap-2">
@@ -119,9 +109,9 @@ const HelicaApp = () => {
     </header>
   );
 
-  // ════════════════════ VIEW: DISCOVERY ════════════════════
+  // DISCOVERY VIEW
   const DiscoveryView = () => (
-    <main className="flex-1 px-4 py-6 flex flex-col">
+    <main className="flex-1 px-4 py-6 flex flex-col mb-20">
       <div className="relative aspect-[3/4] rounded-[30px] overflow-hidden shadow-2xl border border-[#1A1A22]">
         <img 
           src={currentCard.image}
@@ -145,17 +135,25 @@ const HelicaApp = () => {
       </div>
 
       <div className="flex justify-between items-center px-4 mt-8">
-        <button onClick={() => handleCardAction('rewind')} className="w-14 h-14 bg-[#F59E0B] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90"><RotateCcw size={24} className="text-black" /></button>
-        <button onClick={() => handleCardAction('dislike')} className="w-14 h-14 bg-[#EF4444] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90"><X size={30} className="text-white" /></button>
-        <button onClick={() => handleCardAction('superlike')} className="w-14 h-14 bg-[#3B82F6] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90"><Star size={24} fill="white" className="text-white" /></button>
-        <button onClick={() => handleCardAction('like')} className="w-14 h-14 bg-[#10B981] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90"><Heart size={24} fill="white" className="text-white" /></button>
+        <button onClick={() => handleCardAction('rewind')} className="w-14 h-14 bg-[#F59E0B] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90">
+          <RotateCcw size={24} className="text-black" />
+        </button>
+        <button onClick={() => handleCardAction('dislike')} className="w-14 h-14 bg-[#EF4444] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90">
+          <X size={30} className="text-white" />
+        </button>
+        <button onClick={() => handleCardAction('superlike')} className="w-14 h-14 bg-[#3B82F6] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90">
+          <Star size={24} fill="white" className="text-white" />
+        </button>
+        <button onClick={() => handleCardAction('like')} className="w-14 h-14 bg-[#10B981] rounded-full flex items-center justify-center shadow-lg hover:opacity-90 transition active:scale-90">
+          <Heart size={24} fill="white" className="text-white" />
+        </button>
       </div>
     </main>
   );
 
-  // ════════════════════ VIEW: WALLET ════════════════════
+  // WALLET VIEW
   const WalletView = () => (
-    <main className="flex-1 px-5 py-6 pb-20">
+    <main className="flex-1 px-5 py-6 pb-20 overflow-y-auto">
       <div className="flex items-center gap-4 mb-8">
         <button onClick={() => setView('discovery')} className="p-2 hover:bg-[#1A1A22] rounded-lg transition">
           <ArrowLeft size={24} className="text-gray-400" />
@@ -196,7 +194,7 @@ const HelicaApp = () => {
     </main>
   );
 
-  // ════════════════════ VIEW: CHAT ════════════════════
+  // CHAT VIEW
   const ChatView = () => (
     <main className="flex-1 flex flex-col pb-20">
       <div className="px-5 py-4 flex items-center gap-4 border-b border-[#1A1A22] bg-[#0D0D12]">
@@ -248,9 +246,9 @@ const HelicaApp = () => {
     </main>
   );
 
-  // ════════════════════ VIEW: SETTINGS ════════════════════
+  // SETTINGS VIEW
   const SettingsView = () => (
-    <main className="flex-1 px-5 py-6 pb-20">
+    <main className="flex-1 px-5 py-6 pb-20 overflow-y-auto">
       <h2 className="text-2xl font-black mb-6">Definições</h2>
       
       <div className="bg-[#1A1A22] rounded-[24px] p-5 flex items-center gap-4 mb-8 border border-white/5">
@@ -267,7 +265,7 @@ const HelicaApp = () => {
           <div className="bg-[#1A1A22] rounded-[20px] overflow-hidden border border-white/5">
             <SettingRow label="Editar Perfil" />
             <SettingRow label="Segurança" />
-            <button onClick={() => setView('verification')} className="w-full flex items-center justify-between p-4 border-b border-white/5 hover:bg-[#2A2A35]/50 transition text-white">
+            <button onClick={() => setView('verification')} className="w-full flex items-center justify-between p-4 border-b border-white/5 hover:bg-[#2A2A35]/50 transition text-white last:border-b-0">
               <span className="text-sm font-semibold">Verificação</span>
               <ChevronRight size={18} className="text-gray-600" />
             </button>
@@ -277,8 +275,8 @@ const HelicaApp = () => {
         <div>
           <p className="text-[#4B5563] text-[10px] font-black tracking-[0.15em] mb-3 px-1">PREFERÊNCIAS</p>
           <div className="bg-[#1A1A22] rounded-[20px] overflow-hidden border border-white/5">
-            <SettingRowToggle label="Notificações" defaultChecked />
-            <SettingRowToggle label="Modo Escuro" defaultChecked />
+            <SettingRowToggle label="Notificações" defaultChecked={true} />
+            <SettingRowToggle label="Modo Escuro" defaultChecked={true} />
           </div>
         </div>
 
@@ -295,7 +293,7 @@ const HelicaApp = () => {
     </main>
   );
 
-  // ════════════════════ VIEW: VERIFICATION ════════════════════
+  // VERIFICATION VIEW
   const VerificationView = () => (
     <main className="flex-1 flex flex-col pb-20 bg-[#0D0D12]">
       <div className="px-5 py-4 flex items-center justify-between border-b border-[#1A1A22] bg-[#0D0D12]">
@@ -316,29 +314,31 @@ const HelicaApp = () => {
       {/* Progress Bar */}
       <div className="px-6 py-4 bg-black flex items-center justify-between border-b border-[#1A1A22]">
         {[1, 2, 3].map((step) => (
-          <div key={step} className="flex flex-col items-center gap-1 shrink-0">
-            <div className={`w-7 h-7 rounded-full flex justify-center items-center text-xs font-bold transition-all ${
-              verificationStep >= step ? 'bg-[#3B82F6] text-white shadow-md' : 'bg-[#2A2A35] text-gray-500'
-            }`}>{step}</div>
-            <span className={`text-[9px] font-bold ${
-              verificationStep >= step ? 'text-[#3B82F6]' : 'text-gray-600'
-            }`}>{step === 1 ? 'Selfie' : step === 2 ? 'Envio' : 'Selo'}</span>
-          </div>
-        ))}
-        {[1, 2].map((step) => (
-          <div key={`line-${step}`} className={`flex-1 h-0.5 mx-2 transition-all ${
-            verificationStep > step ? 'bg-[#3B82F6]' : 'bg-[#2A2A35]'
-          }`} />
+          <React.Fragment key={step}>
+            <div className="flex flex-col items-center gap-1 shrink-0">
+              <div className={`w-7 h-7 rounded-full flex justify-center items-center text-xs font-bold transition-all ${
+                verificationStep >= step ? 'bg-[#3B82F6] text-white shadow-md' : 'bg-[#2A2A35] text-gray-500'
+              }`}>{step}</div>
+              <span className={`text-[9px] font-bold ${
+                verificationStep >= step ? 'text-[#3B82F6]' : 'text-gray-600'
+              }`}>{step === 1 ? 'Selfie' : step === 2 ? 'Envio' : 'Selo'}</span>
+            </div>
+            {step < 3 && (
+              <div className={`flex-1 h-0.5 mx-2 transition-all ${
+                verificationStep > step ? 'bg-[#3B82F6]' : 'bg-[#2A2A35]'
+              }`} />
+            )}
+          </React.Fragment>
         ))}
       </div>
 
-      {/* PASSO 1: Captura de Câmera */}
+      {/* PASSO 1 */}
       {verificationStep === 1 && (
         <div className="flex-1 flex flex-col justify-center items-center gap-5 px-5 py-8">
           <h2 className="text-base font-bold text-white text-center">Passo 1: Tira uma selfie real</h2>
           <p className="text-xs text-gray-400 text-center leading-relaxed">Precisamos de uma foto espontânea do teu rosto para validar que és o dono legítimo deste perfil.</p>
 
-          <div className="w-64 h-64 bg-[#1A1A22] border-2 border-dashed border-[#2A2A35] rounded-3xl flex flex-col justify-center items-center group cursor-pointer hover:border-[#3B82F6] transition">
+          <div className="w-64 h-64 bg-[#1A1A22] border-2 border-dashed border-[#2A2A35] rounded-3xl flex flex-col justify-center items-center group cursor-pointer hover:border-[#3B82F6] transition relative">
             <Camera size={32} className="text-gray-600 mb-2 group-hover:text-[#3B82F6] transition" />
             <span className="text-[11px] text-gray-500 font-semibold">Câmera pronta para disparar</span>
             <div className="absolute inset-8 border border-[#3B82F6]/20 rounded-2xl pointer-events-none"></div>
@@ -350,7 +350,7 @@ const HelicaApp = () => {
         </div>
       )}
 
-      {/* PASSO 2: Revisão e Submissão */}
+      {/* PASSO 2 */}
       {verificationStep === 2 && (
         <div className="flex-1 flex flex-col justify-center items-center gap-6 px-5 py-8">
           <h2 className="text-base font-bold text-white text-center">Passo 2: Envia o teu pedido</h2>
@@ -374,7 +374,7 @@ const HelicaApp = () => {
         </div>
       )}
 
-      {/* PASSO 3: Sucesso */}
+      {/* PASSO 3 */}
       {verificationStep === 3 && (
         <div className="flex-1 flex flex-col justify-center items-center gap-5 text-center px-5 py-8">
           <div className="w-16 h-16 bg-[#3B82F6] text-white rounded-full flex justify-center items-center shadow-xl shadow-[#3B82F6]/20 relative">
@@ -397,7 +397,7 @@ const HelicaApp = () => {
     </main>
   );
 
-  // ════════════════════ VIEW: BOOST ════════════════════
+  // BOOST VIEW
   const BoostView = () => (
     <main className="flex-1 px-6 py-8 flex flex-col justify-center items-center text-center gap-6 pb-20">
       <div className="flex justify-center items-center relative">
@@ -426,7 +426,7 @@ const HelicaApp = () => {
     </main>
   );
 
-  // ════════════════════ MODAL DE CONFIRMAÇÃO ════════════════════
+  // MODAL
   const ConfirmModal = () => (
     isModalOpen && (
       <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
@@ -446,7 +446,7 @@ const HelicaApp = () => {
     )
   );
 
-  // ════════════════════ NAVBAR INFERIOR ════════════════════
+  // NAVBAR
   const NavBar = () => (
     <nav className="h-20 bg-[#1A1A22] border-t border-white/5 flex items-center justify-around px-4 sticky bottom-0 z-40">
       <NavButton icon={<Home size={26} />} label="Home" active={view === 'discovery'} onClick={() => setView('discovery')} />
@@ -457,7 +457,6 @@ const HelicaApp = () => {
     </nav>
   );
 
-  // ════════════════════ RENDER PRINCIPAL ════════════════════
   return (
     <div className="bg-[#0D0D12] text-white min-h-screen font-['Inter'] flex flex-col items-center">
       <div className="w-full max-w-[390px] min-h-screen border-x border-[#1A1A22] flex flex-col relative bg-[#0D0D12]">
@@ -475,7 +474,7 @@ const HelicaApp = () => {
   );
 };
 
-// ════════════════════ COMPONENTES AUXILIARES ════════════════════
+// COMPONENTES AUXILIARES
 const SettingRow = ({ label }) => (
   <button className="w-full flex items-center justify-between p-4 border-b border-white/5 last:border-b-0 hover:bg-[#2A2A35]/50 transition text-white">
     <span className="text-sm font-semibold">{label}</span>
